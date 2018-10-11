@@ -1,17 +1,17 @@
 # instagram-oauth-nodejs-server
-It is a template is ready to use, setting up a Node.js server for Intagram-API OAuth purpose.
+It is a template is ready to use, setting up a Point.js server for Intagram-API OAuth purpose.
 
 [Blog](https://hackernoon.com/instagramapi-set-up-nodejs-server-to-get-access-token-in-3-step-34c66039cffc)
 
 ## Things we need
  - Create an Instagram Application
  - Copy Client ID and Client Secret to this project
- - Prepare a domain name, where Node.js server is hosted, add it to Valid redirectURL
+ - Prepare a domain name, where Point.js server is hosted, add it to Valid redirectURL
 
 ![instaggram](https://cloud.githubusercontent.com/assets/5538753/25563344/35335676-2dcd-11e7-9035-dcdb8fea41e3.jpg)
 
 ## Run
-The Node.js server have to be run on the server where match the field `Valid redirectURL` in Intagram Configuration
+The Point.js server have to be run on the server where match the field `Valid redirectURL` in Intagram Configuration
 
 Run
 ```
