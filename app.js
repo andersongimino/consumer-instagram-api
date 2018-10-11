@@ -13,8 +13,12 @@ ig.use({
   client_id: '25c59086986040a482d8348512648986',
   client_secret: '70ef730c15324cf59c0103a5a6cf6818'
 });
- 
+
+var apiUrl = 'https://api.instagram.com/v1/'; 
 var redirect_uri = 'http://localhost:3000' + '/handleauth';
+var latitude = 37.72338562;
+var longitude = -121.94412298;
+var distanceParam = 1000;
 
 app.get('/authorize', function(req, res){
   // set the scope of our application to be able to access likes and public content
@@ -34,15 +38,13 @@ app.get('/handleAuth', function(req, res){
  
 app.get('/', function(req, res){
   var access_token = exports.access_token;
-  var userId = access_token.split('.')[0];
-  console.log(userId);
-  request('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + 
+  request(apiUrl + 'users/self/media/recent/?access_token=' + 
   access_token, function (error, response, body) {
     if(error){
-      console.log('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_token);
+      console.log(apiUrl + 'users/self/media/recent/?access_token=' + access_token);
       res.send(error);
     }else{
-      console.log('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_token);
+      console.log(apiUrl + 'users/self/media/recent/?access_token=' + access_token);
       res.send(body);
     }
   });
@@ -50,15 +52,13 @@ app.get('/', function(req, res){
 
 app.get('/locations/search', function(req, res){
   var access_token = exports.access_token;
-  var userId = access_token.split('.')[0];
-  console.log(userId);
-  request('https://api.instagram.com/v1/locations/search?lat=37.72338562&lng=-121.94412298&access_token=' + 
+  request(apiUrl + 'locations/search?lat=' + latitude + '&lng=' + longitude + '&access_token=' + 
   access_token, function (error, response, body) {
     if(error){
-      console.log('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_token);
+      console.log(apiUrl + 'users/self/media/recent/?access_token=' + access_token);
       res.send(error);
     }else{
-      console.log('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_token);
+      console.log(apiUrl + 'users/self/media/recent/?access_token=' + access_token);
       res.send(body);
     }
   });
@@ -66,77 +66,34 @@ app.get('/locations/search', function(req, res){
 
 //california = 212913952
 //recife = 213762864
-app.get('/locations/id', function(req, res){
+app.get('/locations/:id', function(req, res){
+  console.log(req.params.id);
   var access_token = exports.access_token;
-  var userId = access_token.split('.')[0];
-  console.log(userId);
-  request('https://api.instagram.com/v1/locations/212913952?access_token=' + 
+  request(apiUrl + 'locations/' + req.params.id + '?access_token=' + 
   access_token, function (error, response, body) {
     if(error){
-      console.log('https://api.instagram.com/v1/locations/212913952?access_token=' + 
+      console.log(apiUrl + 'locations/' + req.params.id + '?access_token=' + 
       access_token);
       res.send(error);
     }else{
-      console.log('https://api.instagram.com/v1/locations/212913952?access_token=' + 
+      console.log(apiUrl + 'locations/' + req.params.id + '?access_token=' + 
       access_token);
       res.send(body);
     }
   });
 });
 
-app.get('/locations/id/mediarecent', function(req, res){
-  console.log(req.query.id);
+app.get('/locations/:id/mediarecent', function(req, res){
+  console.log(req.params.id);
   var access_token = exports.access_token;
-  var userId = access_token.split('.')[0];
-  console.log(userId);
-  request('https://api.instagram.com/v1/locations/213762864/media/recent?access_token=' + 
+  request(apiUrl + 'locations/' + req.params.id + '/media/recent?access_token=' + 
   access_token, function (error, response, body) {
     if(error){
-      console.log('https://api.instagram.com/v1/locations/213762864/media/recent?access_token=' + 
+      console.log(apiUrl + 'locations/' + req.params.id + '/media/recent?access_token=' + 
       access_token);
       res.send(error);
     }else{
-      console.log('https://api.instagram.com/v1/locations/213762864/media/recent?access_token=' + 
-      access_token);
-      res.send(body);
-    }
-  });
-});
-
-
-app.get('/tags/tagname/mediarecent', function(req, res){
-  console.log(req.query.id);
-  var access_token = exports.access_token;
-  var userId = access_token.split('.')[0];
-  console.log(userId);
-  var tagName = "haddad";
-  request('https://api.instagram.com/v1/tags/' + tagName + '/media/recent?access_token=' + 
-  access_token, function (error, response, body) {
-    if(error){
-      console.log('https://api.instagram.com/v1/tags/' + tagName + '/media/recent?access_token=' + 
-      access_token);
-      res.send(error);
-    }else{
-      console.log('https://api.instagram.com/v1/tags/' + tagName + '/media/recent?access_token=' + 
-      access_token);
-      res.send(body);
-    }
-  });
-});
-
-app.get('/tags/tagname', function(req, res){
-  console.log(req.query.id);
-  var access_token = exports.access_token;
-  var userId = access_token.split('.')[0];
-  console.log(userId);
-  request('https://api.instagram.com/v1/tags/{tag-name}?access_token=' + 
-  access_token, function (error, response, body) {
-    if(error){
-      console.log('https://api.instagram.com/v1/tags/{tag-name}?access_token=' + 
-      access_token);
-      res.send(error);
-    }else{
-      console.log('https://api.instagram.com/v1/tags/{tag-name}?access_token=' + 
+      console.log(apiUrl + 'locations/' + req.params.id + '/media/recent?access_token=' + 
       access_token);
       res.send(body);
     }
@@ -144,7 +101,56 @@ app.get('/tags/tagname', function(req, res){
 });
 
 
+app.get('/tags/:tagname/mediarecent', function(req, res){
+  console.log(req.params.tagname);
+  var access_token = exports.access_token;
+  request(apiUrl + 'tags/' + req.params.tagname + '/media/recent?access_token=' + 
+  access_token, function (error, response, body) {
+    if(error){
+      console.log(apiUrl + 'tags/' + req.params.tagname + '/media/recent?access_token=' + 
+      access_token);
+      res.send(error);
+    }else{
+      console.log(apiUrl + 'tags/' + req.params.tagname + '/media/recent?access_token=' + 
+      access_token);
+      res.send(body);
+    }
+  });
+});
 
+app.get('/tags/:tagname', function(req, res){
+  console.log(req.params.tagname);
+  var access_token = exports.access_token;
+  request(apiUrl + 'tags/' + req.params.tagname + '?access_token=' + 
+  access_token, function (error, response, body) {
+    if(error){
+      console.log(apiUrl + 'tags/' + req.params.tagname + '?access_token=' + 
+      access_token);
+      res.send(error);
+    }else{
+      console.log(apiUrl + 'tags/' + req.params.tagname + '?access_token=' + 
+      access_token);
+      res.send(body);
+    }
+  });
+});
+
+
+app.get('/media/search', function(req, res){
+  var access_token = exports.access_token;
+  request(apiUrl + 'media/search?lat=' + latitude + '&lng=' + longitude + '&distance=' + distanceParam + '&access_token=' + 
+  access_token, function (error, response, body) {
+    if(error){
+      console.log(apiUrl + 'media/search?lat=' + latitude + '&lng=' + longitude + '&distance=' + distanceParam + '&access_token=' + 
+      access_token);
+      res.send(error);
+    }else{
+      console.log(apiUrl + 'media/search?lat=' + latitude + '&lng=' + longitude + '&distance=' + distanceParam + '&access_token=' + 
+      access_token);
+      res.send(body);
+    }
+  });
+});
  
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
